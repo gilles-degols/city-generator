@@ -1,18 +1,20 @@
 
 from random import randint
 import Bloc
-from math import cos
+from math import cos,pi,abs
 
 class City(object):
 
-    def __init__(self, un_size_x, un_size_y, b_elevation, un_bloc_min_size, un_bloc_max_size):
+    def __init__(self, un_size_x, un_size_y, b_elevation, un_bloc_min_size, un_bloc_max_size, un_initial_road_width, map_elevation):
         self.m_unBlocMinSize = un_bloc_min_size
         self.m_unBlocMaxSize = un_bloc_max_size
         self.m_bElevation = b_elevation
         self.m_unSizeX = un_size_x
         self.m_unSizeY = un_size_y
         self.m_listBlocs = []
-        self.m_elevationAmplitude = 
+        self.m_mapElevationData = map_elevation
+        
+        self.division(0, 0, un_size_x, un_size_y, un_initial_road_width)
         
         
     def division(self, un_pos_x, un_pos_y, un_size_x, un_size_y, un_road_width):
@@ -40,15 +42,31 @@ class City(object):
             self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, unCutY - un_pos_y, un_road_width - 1) # Lower left
             
         elif bCutX:
-            self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, un_size_y, un_road_width - 1) # Left
-            self.division(unCutX + un_road_width, un_pos_y, un_pos_x + un_size_x - (unCutX + un_road_width), un_size_y, un_road_width - 1) # Right
+            unBlocIndex1 = self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, un_size_y, un_road_width - 1) # Left
+            unBlocIndex2 = self.division(unCutX + un_road_width, un_pos_y, un_pos_x + un_size_x - (unCutX + un_road_width), un_size_y, un_road_width - 1) # Right
+            
+            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0 and abs(self.m_listBlocs[unBlocIndex1].getZ() - self.m_listBlocs[unBlocIndex1].getZ()) < 1:
+                self.buildBridge(unBlocIndex1, unBlocIndex2)
             
         elif bCutY:
-            self.division(un_pos_x, unCutY + un_road_width, un_size_x, un_pos_y + un_size_y - (unCutY + un_road_width), un_road_width - 1) # Up
-            self.division(un_pos_x, un_pos_y, un_size_x, unCutY - un_pos_y, un_road_width - 1) # Down
+            unBlocIndex1 = self.division(un_pos_x, unCutY + un_road_width, un_size_x, un_pos_y + un_size_y - (unCutY + un_road_width), un_road_width - 1) # Up
+            unBlocIndex2 = self.division(un_pos_x, un_pos_y, un_size_x, unCutY - un_pos_y, un_road_width - 1) # Down
             
+            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0 and abs(self.m_listBlocs[unBlocIndex1].getZ() - self.m_listBlocs[unBlocIndex1].getZ()) < 1:
+                self.buildBridge(unBlocIndex1, unBlocIndex2)
+                
         else:
-            fZ = cos(un_pos_x) * cos(un_pos_y)
+            fZ = self.computeZ(un_pos_x, un_pos_y, un_size_x, un_size_y)
             self.m_listBlocs.append(Bloc(un_pos_x, un_pos_y, fZ, un_size_x, un_size_y))
+            return len(self.m_listBlocs)-1
+        
+        return -1
             
-            
+    def computeZ(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        if self.m_mapElevationData["type"] == "cos*cos":
+            return self.m_mapElevationData["amplitude"] * cos(2*pi/self.m_mapElevationData["x period"] * un_pos_x) * cos(2*pi/self.m_mapElevationData["y period"] * un_pos_y)
+        else:
+            return 0
+        
+    def buildBridge(self, un_bloc_index_1, un_bloc_index_2):
+        pass
