@@ -14,3 +14,5 @@ class Bloc(object):
     
     def buildBloc(self):
         
+        
+    def division(self):
