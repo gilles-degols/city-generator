@@ -1,8 +1,3 @@
-'''
-Created on 19 janv. 2015
-
-@author: anthonydebruyn
-'''
 
 class Bloc(object):
 
@@ -12,6 +7,10 @@ class Bloc(object):
         self.m_unPosZ = un_pos_z
         self.m_unSizeX = un_size_x
         self.m_unSizeY = un_size_y
+        self.m_listElements = []
         
     def getPosZ(self):
         return self.m_unPosZ
+    
+    def buildBloc(self):
+        
