@@ -2,6 +2,8 @@
 from random import randint, random
 from Bloc import Bloc
 from math import cos,pi, sqrt
+from src import RetroBloc
+from src.ModernBloc import ModernBloc
 
 class City(object):
 
@@ -56,7 +58,7 @@ class City(object):
                 
         else:
             fZ = self.computeZ(un_pos_x, un_pos_y, un_size_x, un_size_y)
-            cBloc = self.getBloc(un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
+            cBloc = self.buildBloc(un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
             self.m_listBlocs.append(cBloc)
             print "bloc %s pos %s %s %s size %s %s" % (len(self.m_listBlocs), un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
             return len(self.m_listBlocs)-1
@@ -72,14 +74,16 @@ class City(object):
     def buildBridge(self, un_bloc_index_1, un_bloc_index_2):
         pass
     
-    def getBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
+    def buildBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
         """ The probability for a bloc to be modern style is decreasing with the distance from the city centre. """
         fCenter = (self.m_unSizeX/2, self.m_unSizeY/2)
         fBlocCenter = (un_pos_x + un_size_x/2, un_pos_y + un_size_y/2)
         fDistance = sqrt(pow(fBlocCenter[0] - fCenter[0], 2) + pow(fBlocCenter[1] - fCenter[1], 2))
         fRatio = fDistance / max(self.m_unSizeX, self.m_unSizeY)
         
-        if random < fRatio: # Create retro style bloc
-            return 
+        if random() < fRatio: # Create retro style bloc
+            return RetroBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
+        else
+            return ModernBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
         
         
