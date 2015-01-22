@@ -45,5 +45,6 @@ class Bloc(object):
             cElement = self.buildElement(un_pos_x, un_pos_y, un_size_x, un_size_y)
             self.m_listElements.append(cElement)
             
+    """ To be overriden by inheriting classes to build the elements associated with the bloc type."""
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
-        
+        pass

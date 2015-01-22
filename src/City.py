@@ -83,7 +83,7 @@ class City(object):
         
         if random() < fRatio: # Create retro style bloc
             return RetroBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
-        else
+        else:
             return ModernBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
         
         
