@@ -16,7 +16,7 @@ class Bloc(object):
         return self.m_unPosZ
     
     def buildBloc(self):
-        self.division(self, self.m_unPosX+1, self.m_unPosY+1, self.m_unSizeX-2, self.m_unSizeY-2) # +1 and -2 to create a space around the blocs (buildings not on the edges).
+        self.division(self.m_unPosX+1, self.m_unPosY+1, self.m_unSizeX-2, self.m_unSizeY-2) # +1 and -2 to create a space around the blocs (buildings not on the edges).
         
     def division(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         bCutX = random() > 0.5 and un_size_x > 3
