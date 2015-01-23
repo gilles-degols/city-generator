@@ -1,6 +1,7 @@
 from src.Bloc import Bloc
 from random import random
-from src.elements.buildings import AncientTower
+from src.elements.buildings.AncientTower import AncientTower
+from src.elements.buildings.AncientBuilding import AncientBuilding
 from math import floor
 
 class RetroBloc(Bloc):

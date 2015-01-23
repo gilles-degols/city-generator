@@ -34,4 +34,10 @@ class AncientBuilding(object):
             pass # TODO Remove this
 
         # The roof centre:
-        for x in range
+        for x in range(un_size_x - 1):
+            for y in range(un_size_y - 1):
+                # TODO Place Roof Element 2 at (un_pos_x + 0.5 + x, un_pos_y + 0.5 + y, un_pos_z)
+                pass # TODO Remove this
+            
+        # TODO Joindre les objets
+        # TODO Prendre une aspirine
