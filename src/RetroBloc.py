@@ -2,6 +2,7 @@ from src.Bloc import Bloc
 from random import random
 from src.elements.buildings.AncientTower import AncientTower
 from src.elements.buildings.AncientBuilding import AncientBuilding
+from src.elements.gardens.Garden import Garden
 from math import floor
 
 class RetroBloc(Bloc):
@@ -15,10 +16,13 @@ class RetroBloc(Bloc):
 
         
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
-        if random < 0.2:
+        fRand = random()
+        if fRand < 0.2:
             return self.buildAncientTower(un_pos_x, un_pos_y, un_size_x, un_size_y)
-        else:
+        elif 0.2 <= fRand < 0.8:
             return self.buildAncientBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+        else:
+            return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
             
 
     def buildAncientTower(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
@@ -30,3 +34,6 @@ class RetroBloc(Bloc):
     def buildAncientBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         unHeight = min(self.ANCIENT_BUILDING_MAX_HEIGHT, max(self.ANCIENT_BUILDING_MIN_HEIGHT, self.m_unSizeX, self.m_unSizeY))
         return AncientBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y, unHeight)
+    
+    def buildGarden(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        return Garden(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)

@@ -10,4 +10,4 @@ class AncientTower(object):
             
         # TODO Placer objet "roof" à hauteur un_height - 1
         
-        # TODO Joindre les objets
+        # TODO Joindre les objets ET remove doubles

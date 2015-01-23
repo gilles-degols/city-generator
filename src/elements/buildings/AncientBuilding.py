@@ -39,5 +39,5 @@ class AncientBuilding(object):
                 # TODO Place Roof Element 2 at (un_pos_x + 0.5 + x, un_pos_y + 0.5 + y, un_pos_z)
                 pass # TODO Remove this
             
-        # TODO Joindre les objets
+        # TODO Joindre les objets ET remove doubles
         # TODO Prendre une aspirine
