@@ -7,7 +7,8 @@ class AncientTower(object):
         
         for i in range(1, un_height - 1):
             # TODO Placer objet "level" de la tour à hauteur i * City.UNIT_VALUE
+            pass # TODO Remove this
             
-        # TODO Placer objet "roof" à hauteur un_height - 1
+        # TODO Placer objet "roof" à hauteur (un_height - 1)*City.UNIT_VALUE
         
         # TODO Joindre les objets ET remove doubles
