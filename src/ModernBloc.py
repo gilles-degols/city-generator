@@ -1,8 +1,11 @@
 from src.Bloc import Bloc
 from random import random
 from src.elements.gardens.Garden import Garden
+from src.elements.buildings.StairsBuilding import StairsBuilding
 
 class ModernBloc(Bloc):
+    TRAPEZE_BUILDING_MIN_HEIGHT = 1
+    TRAPEZE_BUILDING_MAX_HEIGHT = 10
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
         Bloc.__init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
@@ -10,18 +13,33 @@ class ModernBloc(Bloc):
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         fRand = random()
         
-        if fRand < 0.25:
-            return self.buildStairsBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
-        elif 0.25 <= fRand < 0.5:
-            return self.buildTrapezeBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
-        elif 0.5 <= fRand < 0.75:
-            return self.buildSphereBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+        if un_size_x >= 4 and un_size_y >= 4:
+            if fRand < 0.25:
+                return self.buildStairsBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            elif 0.25 <= fRand < 0.5:
+                return self.buildTrapezeBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            elif 0.5 <= fRand < 0.75:
+                return self.buildSphereBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            else:
+                return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            
+        elif un_size_x >= 2 and un_size_y >= 2:
+            if fRand < 1/3:
+                return self.buildStairsBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            elif 1/3 <= fRand < 2/3:
+                return self.buildTrapezeBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            else:
+                return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            
         else:
             return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
-        
         
     def buildGarden(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return Garden(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
     
     def buildStairsBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return StairsBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
+    
+    def buildTrapezeBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        unHeight = min(self.TRAPEZE_BUILDING_MAX_HEIGHT, max(self.TRAPEZE_BUILDING_MIN_HEIGHT, self.m_unSizeX, self.m_unSizeY))
+        return TrapezeBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)

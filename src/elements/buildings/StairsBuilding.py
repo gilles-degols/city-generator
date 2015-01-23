@@ -28,7 +28,7 @@ class StairsBuilding(object):
         --unScaleY
         
         while unScaleX > 0 and unScaleY > 0:
-            # Duplicate last placed element AND move it upwards (City.UNIT_VALUE)
+            # TODO Duplicate last placed element AND move it upwards (City.UNIT_VALUE)
             # TODO Scale Element (unScaleX, unScaleY, 1)
             --unScaleX
             --unScaleY
