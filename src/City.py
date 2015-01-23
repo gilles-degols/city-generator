@@ -6,6 +6,7 @@ from src import RetroBloc
 from src.ModernBloc import ModernBloc
 
 class City(object):
+    UNIT_VALUE = 3 # 3 meters or blender units per unit
 
     def __init__(self, un_size_x, un_size_y, un_bloc_min_size, un_bloc_max_size, un_initial_road_width, map_elevation):
         self.m_unBlocMinSize = un_bloc_min_size
@@ -61,6 +62,7 @@ class City(object):
             cBloc = self.buildBloc(un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
             self.m_listBlocs.append(cBloc)
             print "bloc %s pos %s %s %s size %s %s" % (len(self.m_listBlocs), un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
+            # TODO Mettre le bloc en enfant de la ville
             return len(self.m_listBlocs)-1
         
         return -1
