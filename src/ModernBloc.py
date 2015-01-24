@@ -3,10 +3,13 @@ from random import random, randint
 from src.elements.gardens.Garden import Garden
 from src.elements.buildings.StairsBuilding import StairsBuilding
 from src.elements.buildings.TrapezeBuilding import TrapezeBuilding
+from src.elements.buildings.SphereBuilding import SphereBuilding
 
 class ModernBloc(Bloc):
     TRAPEZE_BUILDING_MIN_HEIGHT = 1
     TRAPEZE_BUILDING_MAX_HEIGHT = 10
+    SPHERE_BUILDING_MIN_HEIGHT = 5
+    SPHERE_BUILDING_MAX_HEIGHT = 10
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
         Bloc.__init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
@@ -46,4 +49,7 @@ class ModernBloc(Bloc):
         return TrapezeBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y, unHeight)
     
     def buildSphereBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
-        
+        unX = un_pos_x + (un_size_x - 1)/2
+        unY = un_pos_y + (un_size_y - 1)/2
+        unHeight = randint(self.SPHERE_BUILDING_MIN_HEIGHT, min(self.SPHERE_BUILDING_MAX_HEIGHT, un_size_x, un_size_y))
+        return SphereBuilding(un_pos_x, un_pos_y, self.m_unPosZ, unHeight)
