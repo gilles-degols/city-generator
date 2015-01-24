@@ -11,6 +11,8 @@ class Bloc(object):
         self.m_unSizeX = un_size_x
         self.m_unSizeY = un_size_y
         self.m_listElements = []
+        self.m_listHorizontalPaths = []
+        self.m_listVerticalPaths = []
         
         self.buildBloc()
         
@@ -20,6 +22,8 @@ class Bloc(object):
     def buildBloc(self):
         self.division(self.m_unPosX+1, self.m_unPosY+1, self.m_unSizeX-2, self.m_unSizeY-2) # +1 and -2 to create a space around the blocs (buildings not on the edges).
         self.buildPlatform()
+        self.buildHorizontalPaths()
+        self.buildVerticalPaths()
         
     def division(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         bCutX = random() > 0.5 and un_size_x > 3
@@ -33,6 +37,10 @@ class Bloc(object):
             self.division(unCutX + 1, unCutY + 1, un_pos_x + un_size_x - (unCutX + 1), un_pos_y + un_size_y - (unCutY + 1)) # Upper right
             self.division(unCutX + 1, un_pos_y, un_pos_x + un_size_x - (unCutX + 1), unCutY - un_pos_y) # Lower right
             self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, unCutY - un_pos_y) # Lower left
+            
+            # Paths:
+            self.m_listHorizontalPaths.append((un_pos_x, unCutY, un_size_x, 1))
+            self.m_listVerticalPaths.append((unCutX, un_pos_y, 1, un_size_y))
             
         elif bCutX:
             unCutX = un_pos_x + randint(1, un_size_x-2)
@@ -59,3 +67,11 @@ class Bloc(object):
             Platform1(self.m_unPosX, self.m_unPosY, self.m_unPosZ, self.m_unSizeX, self.m_unSizeY)
         else:
             Platform2(self.m_unPosX, self.m_unPosY, self.m_unPosZ, self.m_unSizeX, self.m_unSizeY)
+    
+    """ To be overriden by inheriting classes to build the paths associated with the bloc type."""
+    def buildHorizontalPaths(self):
+        pass
+    
+    """ To be overriden by inheriting classes to build the paths associated with the bloc type."""
+    def buildVerticalPaths(self):
+        pass
