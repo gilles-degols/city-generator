@@ -1,4 +1,6 @@
 from random import random, randint
+from src.platforms.Platform1 import Platform1
+from src.platforms.Platform2 import Platform2
 
 class Bloc(object):
 
@@ -17,6 +19,7 @@ class Bloc(object):
     
     def buildBloc(self):
         self.division(self.m_unPosX+1, self.m_unPosY+1, self.m_unSizeX-2, self.m_unSizeY-2) # +1 and -2 to create a space around the blocs (buildings not on the edges).
+        self.buildPlatform()
         
     def division(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         bCutX = random() > 0.5 and un_size_x > 3
@@ -49,3 +52,10 @@ class Bloc(object):
     """ To be overriden by inheriting classes to build the elements associated with the bloc type."""
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         pass
+    
+    """ To be overriden by inheriting classes to build the mountains associated with the bloc type."""
+    def buildPlatform(self):        
+        if random() < 0.5:
+            Platform1(self.m_unPosX, self.m_unPosY, self.m_unPosZ, self.m_unSizeX, self.m_unSizeY)
+        else:
+            Platform2(self.m_unPosX, self.m_unPosY, self.m_unPosZ, self.m_unSizeX, self.m_unSizeY)
