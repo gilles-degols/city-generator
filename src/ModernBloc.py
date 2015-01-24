@@ -4,6 +4,7 @@ from src.elements.gardens.Garden import Garden
 from src.elements.buildings.StairsBuilding import StairsBuilding
 from src.elements.buildings.TrapezeBuilding import TrapezeBuilding
 from src.elements.buildings.SphereBuilding import SphereBuilding
+from src.elements.stations.Station import Station
 
 class ModernBloc(Bloc):
     TRAPEZE_BUILDING_MIN_HEIGHT = 1
@@ -25,7 +26,13 @@ class ModernBloc(Bloc):
             elif 0.5 <= fRand < 0.75:
                 return self.buildSphereBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
             else:
-                return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
+                if (un_size_x >= 8 and un_size_y >= 3) or (un_size_x >= 3 and un_size_y >= 8):
+                    if random() < 0.5:
+                        return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
+                    else:
+                        return self.buildStation(un_pos_x, un_pos_y, un_size_x, un_size_y)
+                else:
+                    return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
             
         elif un_size_x >= 2 and un_size_y >= 2:
             if fRand < 1/3:
@@ -53,3 +60,6 @@ class ModernBloc(Bloc):
         unY = un_pos_y + (un_size_y - 1)/2
         unHeight = randint(self.SPHERE_BUILDING_MIN_HEIGHT, min(self.SPHERE_BUILDING_MAX_HEIGHT, un_size_x, un_size_y))
         return SphereBuilding(un_pos_x, un_pos_y, self.m_unPosZ, unHeight)
+    
+    def buildStation(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        return Station(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)

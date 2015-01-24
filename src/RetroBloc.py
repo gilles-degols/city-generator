@@ -4,6 +4,7 @@ from src.elements.buildings.AncientTower import AncientTower
 from src.elements.buildings.AncientBuilding import AncientBuilding
 from src.elements.gardens.Garden import Garden
 from math import floor
+from src.elements.stations.Station import Station
 
 class RetroBloc(Bloc):
     ANCIENT_TOWER_MAX_HEIGHT = 10 # units (3m here)
@@ -22,8 +23,13 @@ class RetroBloc(Bloc):
         elif 0.2 <= fRand < 0.8:
             return self.buildAncientBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
         else:
-            return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
-            
+            if (un_size_x >= 8 and un_size_y >= 3) or (un_size_x >= 3 and un_size_y >= 8):
+                if random() < 0.5:
+                    return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
+                else:
+                    return self.buildStation(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            else:
+                return self.buildGarden(un_pos_x, un_pos_y, un_size_x, un_size_y)
 
     def buildAncientTower(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         unHeight = min(self.ANCIENT_TOWER_MAX_HEIGHT, max(self.ANCIENT_TOWER_MIN_HEIGHT, self.m_unSizeX, self.m_unSizeY))
@@ -37,3 +43,6 @@ class RetroBloc(Bloc):
     
     def buildGarden(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return Garden(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
+    
+    def buildStation(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        return Station(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
