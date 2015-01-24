@@ -11,7 +11,6 @@ class Station(object):
 		new_obj.location = (unX * City_UNIT_VALUE, unY * City_UNIT_VALUE, (un_pos_z + 4/3) * City_UNIT_VALUE)
 		
 		if un_size_x < un_size_y:
-			new_obj.rotation_mode = 'XYZ'
-			new_obj.rotation_euler = (0, 0, 90)
+			new_obj.rotation_euler = (0, 0, math.pi / 2)
 		
 		scene.objects.link(new_obj)
