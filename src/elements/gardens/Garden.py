@@ -11,3 +11,5 @@ class Garden(object):
                     fScale = uniform(0.2, 1)
                     # Scale it at fScale
                     pass # Remove this
+                
+        # Tout joindre et remove doubles.
