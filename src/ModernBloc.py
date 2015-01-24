@@ -1,7 +1,8 @@
 from src.Bloc import Bloc
-from random import random
+from random import random, randint
 from src.elements.gardens.Garden import Garden
 from src.elements.buildings.StairsBuilding import StairsBuilding
+from src.elements.buildings.TrapezeBuilding import TrapezeBuilding
 
 class ModernBloc(Bloc):
     TRAPEZE_BUILDING_MIN_HEIGHT = 1
@@ -41,5 +42,5 @@ class ModernBloc(Bloc):
         return StairsBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
     
     def buildTrapezeBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
-        unHeight = min(self.TRAPEZE_BUILDING_MAX_HEIGHT, max(self.TRAPEZE_BUILDING_MIN_HEIGHT, self.m_unSizeX, self.m_unSizeY))
-        return TrapezeBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
+        unHeight = randint(self.TRAPEZE_BUILDING_MIN_HEIGHT, min(self.TRAPEZE_BUILDING_MAX_HEIGHT, (un_size_y - 2) * 3 + 1))
+        return TrapezeBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y, unHeight)
