@@ -73,7 +73,7 @@ class City(object):
         else:
             return 0
         
-    def buildBridge(self, un_bloc_index_1, un_bloc_index_2):
+    def buildBridge(self, un_bloc_index_1, un_bloc_index_2): # TODO
         pass
     
     def buildBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
