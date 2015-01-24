@@ -5,33 +5,33 @@ class TrapezeBuilding(object):
         # MULTIPLY COORD BY City.UNIT_VALUE
         # The back:
         # Import Back from Modern 2.blend
-        # Move it to (un_pos_x + un_size_x/2, un_pos_y + un_size_y - 1, un_pos_z)
+        # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y + un_size_y - 1, un_pos_z)
         # Scale it (un_size_x, 1, un_height)
         
         # The front windows:
         # Import Window
-        # Move it to (un_pos_x + un_size_x/2, un_pos_y, un_pos_z)
+        # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y, un_pos_z)
         # Scale it (un_size_x, 1, 1)
         
         unZ = un_pos_z + 1
         unY = un_pos_y + 1/3
         while unZ < un_pos_z + un_height and unY <= un_pos_y + un_size_y - 2:
             # Duplicate last placed object
-            # Move it to (un_pos_x + un_size_x/2, unY, unZ)
+            # Move it to (un_pos_x + (un_size_x-1)/2, unY, unZ)
             unY += 1/3
             ++unZ
             
         # The center part:
         if un_size_y > 2:
             # Import Center
-            # Move it to (un_pos_x + un_size_x/2, un_pos_y + 1/2 + 1/6, un_pos_z)
+            # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y + 1/2 + 1/6, un_pos_z)
             # Scale it (un_size_x, 1, 1)
             
             unY2 = un_pos_y + 1
             unScaleZ = 2
             while unY2 <= un_pos_y + un_size_y - 10/6:
                 # Duplicate last placed Element
-                # Move it at (un_pos_x + un_size_x/2, unY, un_pos_z)
+                # Move it at (un_pos_x + (un_size_x-1)/2, unY, un_pos_z)
                 # Scale it (un_size_x, 1, unScaleZ)
                 unScaleZ = min(unScaleZ + 1, unZ - un_pos_z)
                 unY2 += 1/3

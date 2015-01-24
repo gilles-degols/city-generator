@@ -44,3 +44,6 @@ class ModernBloc(Bloc):
     def buildTrapezeBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         unHeight = randint(self.TRAPEZE_BUILDING_MIN_HEIGHT, min(self.TRAPEZE_BUILDING_MAX_HEIGHT, (un_size_y - 2) * 3 + 1))
         return TrapezeBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y, unHeight)
+    
+    def buildSphereBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+        
