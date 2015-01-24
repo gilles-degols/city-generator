@@ -33,3 +33,4 @@ class StairsBuilding(object):
             --unScaleX
             --unScaleY
             
+        # TODO Join all objects and remove doubles
