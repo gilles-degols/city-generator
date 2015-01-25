@@ -14,6 +14,7 @@ class TrapezeBuilding(object):
         # Scale it (un_size_x, 1, un_height)
         new_obj.scale = (un_size_x, 1, un_height)
         
+        new_obj.select = True
         scene.objects.link(new_obj)
         
         # The front windows:
@@ -27,6 +28,7 @@ class TrapezeBuilding(object):
         # Scale it (un_size_x, 1, 1)
         new_obj.scale = (un_size_x, 1, 1)
         
+        new_obj.select = True
         scene.objects.link(new_obj)
         
         unZ = un_pos_z + 1
@@ -42,6 +44,7 @@ class TrapezeBuilding(object):
             # Scale it (un_size_x, 1, 1)
             new_obj.scale = (un_size_x, 1, 1)
             
+            new_obj.select = True
             scene.objects.link(new_obj)
             
             unY += 1/3
@@ -59,6 +62,7 @@ class TrapezeBuilding(object):
             # Scale it (un_size_x, 1, 1)
             new_obj.scale = (un_size_x, 1, 1)
             
+            new_obj.select = True
             scene.objects.link(new_obj)
             
             unY2 = un_pos_y + 1
@@ -74,9 +78,17 @@ class TrapezeBuilding(object):
                 # Scale it (un_size_x, 1, unScaleZ)
                 new_obj.scale = (un_size_x, 1, unScaleZ)
                 
+                new_obj.select = True
                 scene.objects.link(new_obj)
                 
                 unScaleZ = min(unScaleZ + 1, unZ - un_pos_z)
                 unY2 += 1/3
                 
         # Join all objects and remove doubles
+        scene.objects.active = new_obj
+        bpy.ops.object.join()
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.remove_doubles()
+        bpy.ops.object.mode_set(mode='OBJECT')
