@@ -2,19 +2,6 @@ class TrapezeBuilding(object):
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y, un_height):
         # MULTIPLY COORD BY City.UNIT_VALUE
-        # The back:
-        # Import Back from Modern 2.blend
-        # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y + un_size_y - 1, un_pos_z)
-        obj = bpy.data.objects['_ModernBuildingBack']
-        mesh = obj.data
-        new_obj = bpy.data.objects.new('ModernBuildingBack', mesh)
-        new_obj.location = ((un_pos_x + (un_size_x-1) / 2) * City.UNIT_VALUE, (un_pos_y + un_size_y - 1) * City.UNIT_VALUE, un_pos_z * City.UNIT_VALUE)
-        
-        # Scale it (un_size_x, 1, un_height)
-        new_obj.scale = (un_size_x, 1, un_height)
-        
-        scene.objects.link(new_obj)
-        
         # The front windows:
         # Import Window
         # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y, un_pos_z)
@@ -26,6 +13,7 @@ class TrapezeBuilding(object):
         # Scale it (un_size_x, 1, 1)
         new_obj.scale = (un_size_x, 1, 1)
         
+        new_obj.select = True
         scene.objects.link(new_obj)
         
         unZ = un_pos_z + 1
@@ -41,6 +29,7 @@ class TrapezeBuilding(object):
             # Scale it (un_size_x, 1, 1)
             new_obj.scale = (un_size_x, 1, 1)
             
+            new_obj.select = True
             scene.objects.link(new_obj)
             
             unY += 1/3
@@ -58,6 +47,7 @@ class TrapezeBuilding(object):
             # Scale it (un_size_x, 1, 1)
             new_obj.scale = (un_size_x, 1, 1)
             
+            new_obj.select = True
             scene.objects.link(new_obj)
             
             unY2 = un_pos_y + 1
@@ -73,11 +63,26 @@ class TrapezeBuilding(object):
                 # Scale it (un_size_x, 1, unScaleZ)
                 new_obj.scale = (un_size_x, 1, unScaleZ)
                 
+                new_obj.select = True
                 scene.objects.link(new_obj)
                 
                 unScaleZ = min(unScaleZ + 1, unZ - un_pos_z)
                 unY2 += 1/3
                 
+        # The back:
+        # Import Back from Modern 2.blend
+        # Move it to (un_pos_x + (un_size_x-1)/2, un_pos_y + un_size_y - 1, un_pos_z)
+        obj = bpy.data.objects['_ModernBuildingBack']
+        mesh = obj.data
+        new_obj = bpy.data.objects.new('ModernBuildingBack', mesh)
+        new_obj.location = ((un_pos_x + (un_size_x-1) / 2) * City.UNIT_VALUE, (un_pos_y + un_size_y - 1) * City.UNIT_VALUE, un_pos_z * City.UNIT_VALUE)
+        
+        # Scale it (un_size_x, 1, un_height)
+        new_obj.scale = (un_size_x, 1, unZ - un_pos_z)
+        
+        new_obj.select = True
+        scene.objects.link(new_obj)
+        
         # Join all objects and remove doubles
         scene.objects.active = new_obj
         bpy.ops.object.join()
