@@ -19,11 +19,13 @@ class ModernBloc(Bloc):
         fRand = random()
         
         if un_size_x >= 4 and un_size_y >= 4:
-            if fRand < 0.25:
+            if fRand < 1/5:
+                return self.buildModernHouse(un_pos_x, un_pos_y, un_size_x, un_size_y)
+            elif 2/5 <= fRand < 3/5:
                 return self.buildStairsBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
-            elif 0.25 <= fRand < 0.5:
+			elif 2/5 <= fRand < 3/5:
                 return self.buildTrapezeBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
-            elif 0.5 <= fRand < 0.75:
+            elif 3/5 <= fRand < 4/5:
                 return self.buildSphereBuilding(un_pos_x, un_pos_y, un_size_x, un_size_y)
             else:
                 if (un_size_x >= 8 and un_size_y >= 3) or (un_size_x >= 3 and un_size_y >= 8):
@@ -48,7 +50,12 @@ class ModernBloc(Bloc):
     def buildGarden(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return Garden(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
     
-    def buildStairsBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+    def buildModernHouse(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
+		unX = un_pos_x + (un_size_x - 1)/2
+        unY = un_pos_y + (un_size_y - 1)/2
+		return ModernHouse(unX, unY, self.m_unPosZ)
+	
+	def buildStairsBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return StairsBuilding(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
     
     def buildTrapezeBuilding(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
@@ -59,7 +66,7 @@ class ModernBloc(Bloc):
         unX = un_pos_x + (un_size_x - 1)/2
         unY = un_pos_y + (un_size_y - 1)/2
         unHeight = randint(self.SPHERE_BUILDING_MIN_HEIGHT, min(self.SPHERE_BUILDING_MAX_HEIGHT, un_size_x, un_size_y))
-        return SphereBuilding(un_pos_x, un_pos_y, self.m_unPosZ, unHeight)
+        return SphereBuilding(unX, unY, self.m_unPosZ, unHeight)
     
     def buildStation(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         return Station(un_pos_x, un_pos_y, self.m_unPosZ, un_size_x, un_size_y)
