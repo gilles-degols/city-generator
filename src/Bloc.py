@@ -1,6 +1,10 @@
 from random import random, randint
 from src.platforms.Platform1 import Platform1
 from src.platforms.Platform2 import Platform2
+from src.pathsElements.Banc1 import Banc1
+from src.pathsElements.TrashCan import TrashCan
+from src.pathsElements.Banc2 import Banc2
+from src.pathsElements.Banc3 import Banc3
 
 class Bloc(object):
 
@@ -11,8 +15,7 @@ class Bloc(object):
         self.m_unSizeX = un_size_x
         self.m_unSizeY = un_size_y
         self.m_listElements = []
-        self.m_listHorizontalPaths = []
-        self.m_listVerticalPaths = []
+        self.m_listPathsMap = [[False for x in range(un_size_y)] for x in range(un_size_x)]
         
         self.buildBloc()
         
@@ -22,8 +25,7 @@ class Bloc(object):
     def buildBloc(self):
         self.division(self.m_unPosX+1, self.m_unPosY+1, self.m_unSizeX-2, self.m_unSizeY-2) # +1 and -2 to create a space around the blocs (buildings not on the edges).
         self.buildPlatform()
-        self.buildHorizontalPaths()
-        self.buildVerticalPaths()
+        self.buildPaths()
         
     def division(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         bCutX = random() > 0.5 and un_size_x > 3
@@ -39,18 +41,39 @@ class Bloc(object):
             self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, unCutY - un_pos_y) # Lower left
             
             # Paths:
-            self.m_listHorizontalPaths.append((un_pos_x, unCutY, un_size_x, 1))
-            self.m_listVerticalPaths.append((unCutX, un_pos_y, 1, un_size_y))
+            for x in range(un_pos_x, un_pos_x + un_size_x):
+                self.m_listPathsMap[x][unCutY] = True
+            self.m_listPathsMap[un_pos_x - 1][unCutY] = False
+            self.m_listPathsMap[un_pos_x + un_size_x][unCutY] = False
+            
+            for y in range(un_pos_y, un_pos_y + un_size_y):
+                self.m_listPathsMap[y][unCutX] = True
+            self.m_listPathsMap[unCutX][un_pos_y - 1] = False
+            self.m_listPathsMap[unCutX][un_pos_y + un_size_y] = False
+            
+            self.m_listPathsMap[unCutX][unCutY] = False
             
         elif bCutX:
             unCutX = un_pos_x + randint(1, un_size_x-2)
             self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, un_size_y) # Left
             self.division(unCutX + 1, un_pos_y, un_pos_x + un_size_x - (unCutX + 1), un_size_y) # Right
             
+            # Path:
+            for y in range(un_pos_y, un_pos_y + un_size_y):
+                self.m_listPathsMap[y][unCutX] = True
+            self.m_listPathsMap[unCutX][un_pos_y - 1] = False
+            self.m_listPathsMap[unCutX][un_pos_y + un_size_y] = False
+            
         elif bCutY:
             unCutY = un_pos_y + randint(1, un_size_y-2)
             self.division(un_pos_x, unCutY + 1, un_size_x, un_pos_y + un_size_y - (unCutY + 1)) # Up
             self.division(un_pos_x, un_pos_y, un_size_x, unCutY - un_pos_y) # Down
+            
+            # Path:
+            for x in range(un_pos_x, un_pos_x + un_size_x):
+                self.m_listPathsMap[x][unCutY] = True
+            self.m_listPathsMap[un_pos_x - 1][unCutY] = False
+            self.m_listPathsMap[un_pos_x + un_size_x][unCutY] = False
             
         else:
             cElement = self.buildElement(un_pos_x, un_pos_y, un_size_x, un_size_y)
@@ -69,9 +92,36 @@ class Bloc(object):
             Platform2(self.m_unPosX, self.m_unPosY, self.m_unPosZ, self.m_unSizeX, self.m_unSizeY)
     
     """ To be overriden by inheriting classes to build the paths associated with the bloc type."""
-    def buildHorizontalPaths(self):
-        pass
-    
-    """ To be overriden by inheriting classes to build the paths associated with the bloc type."""
-    def buildVerticalPaths(self):
-        pass
+    def buildPaths(self):
+        for x in range(0, self.m_unSizeX):
+            for y in range(0, self.m_unSizeY):
+                if self.m_listPathsMap[x][y]:
+                    if (self.m_listPathsMap[x-1][y] or self.m_listPathsMap[x+1][y]): # Horizontal path
+                        self.buildHorizontalPathElement(x, y)
+                    elif (self.m_listPathsMap[x][y-1] or self.m_listPathsMap[x][y+1]): # Vertical path
+                        self.buildVerticalPathElement(x, y)
+                        
+    def buildHorizontalPathElement(self, un_pos_x, un_pos_y):
+        fRand = random()
+        
+        if fRand < 0.125:
+            Banc1(un_pos_x, un_pos_y, self.m_unPosZ, 0)
+        elif 0.125 <= fRand < 0.25:
+            Banc2(un_pos_x, un_pos_y, self.m_unPosZ, 0)
+        elif 0.25 <= fRand < 0.375:
+            Banc3(un_pos_x, un_pos_y, self.m_unPosZ, 0)
+        elif 0.375 <= fRand < 0.5:
+            TrashCan(un_pos_x, un_pos_y, self.m_unPosZ, 0)
+        
+    def buildVerticalPathElement(self, un_pos_x, un_pos_y):
+        fRand = random()
+        
+        if fRand < 0.125:
+            Banc1(un_pos_x, un_pos_y, self.m_unPosZ, 3)
+        elif 0.125 <= fRand < 0.25:
+            Banc2(un_pos_x, un_pos_y, self.m_unPosZ, 3)
+        elif 0.25 <= fRand < 0.375:
+            Banc3(un_pos_x, un_pos_y, self.m_unPosZ, 3)
+        elif 0.375 <= fRand < 0.5:
+            TrashCan(un_pos_x, un_pos_y, self.m_unPosZ, 3)
+        
