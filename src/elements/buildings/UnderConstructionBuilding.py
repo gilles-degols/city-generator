@@ -21,9 +21,9 @@ class UnderConstructionBuilding(object):
             new_obj.select = True
             scene.objects.link(new_obj)
         
-        for j in range(un_height - 1, un_height):
-            for k in range(un_pos_x, un_size_x - 1):
-                for l in range(un_pos_y, un_size_y - 1):
+        for j in range(un_height - 2, un_height):
+            for k in range(un_pos_x, un_pos_x + un_size_x):
+                for l in range(un_pos_y, un_pos_y + un_size_y):
                     new_obj = bpy.data.objects.new('UnderConstructionLinkedBeams', linkedBeams.data)
                     new_obj.location = (k * City.UNIT_VALUE, l * City.UNIT_VALUE, (un_pos_z + j) * City.UNIT_VALUE)
                     new_obj.select = True
