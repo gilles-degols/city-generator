@@ -1,9 +1,10 @@
 
 from random import randint, random
 from Bloc import Bloc
-from math import cos,pi, sqrt
+from math import cos, pi, sqrt, atan, hypot, floor, degrees
 from src import RetroBloc
 from src.ModernBloc import ModernBloc
+from src.bridges.Bridge import Bridge
 
 class City(object):
     UNIT_VALUE = 3 # 3 meters or blender units per unit
@@ -47,15 +48,23 @@ class City(object):
             unBlocIndex1 = self.division(un_pos_x, un_pos_y, unCutX - un_pos_x, un_size_y, un_road_width - 1) # Left
             unBlocIndex2 = self.division(unCutX + un_road_width, un_pos_y, un_pos_x + un_size_x - (unCutX + un_road_width), un_size_y, un_road_width - 1) # Right
             
-            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0 and abs(self.m_listBlocs[unBlocIndex1].getPosZ() - self.m_listBlocs[unBlocIndex1].getPosZ()) < 1:
-                self.buildBridge(unBlocIndex1, unBlocIndex2)
+            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0:
+                fZ2 = self.m_listBlocs[unBlocIndex2].getPosZ()
+                fZ1 = self.m_listBlocs[unBlocIndex1].getPosZ()
+                fCoefficient = abs(fZ2 - fZ1) / un_road_width
+                if fCoefficient <= 0.5:
+                    self.buildBridge(unCutX, un_pos_y + floor(un_size_y/2), fZ1, degrees(atan((fZ2 - fZ1)/un_road_width)), 0, hypot(fZ2 - fZ1, un_road_width))
             
         elif bCutY:
-            unBlocIndex1 = self.division(un_pos_x, unCutY + un_road_width, un_size_x, un_pos_y + un_size_y - (unCutY + un_road_width), un_road_width - 1) # Up
-            unBlocIndex2 = self.division(un_pos_x, un_pos_y, un_size_x, unCutY - un_pos_y, un_road_width - 1) # Down
+            unBlocIndex2 = self.division(un_pos_x, unCutY + un_road_width, un_size_x, un_pos_y + un_size_y - (unCutY + un_road_width), un_road_width - 1) # Up
+            unBlocIndex1 = self.division(un_pos_x, un_pos_y, un_size_x, unCutY - un_pos_y, un_road_width - 1) # Down
             
-            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0 and abs(self.m_listBlocs[unBlocIndex1].getPosZ() - self.m_listBlocs[unBlocIndex1].getPosZ()) < 1:
-                self.buildBridge(unBlocIndex1, unBlocIndex2)
+            if unBlocIndex1 >= 0 and unBlocIndex2 >= 0:
+                fZ2 = self.m_listBlocs[unBlocIndex2].getPosZ()
+                fZ1 = self.m_listBlocs[unBlocIndex1].getPosZ()
+                fCoefficient = abs(fZ2 - fZ1) / un_road_width
+                if fCoefficient <= 0.5:
+                    self.buildBridge(un_pos_x + floor(un_size_x/2), unCutY, fZ1, degrees(atan((fZ2 - fZ1)/un_road_width)), 90, hypot(fZ2 - fZ1, un_road_width))
                 
         else:
             fZ = self.computeZ(un_pos_x, un_pos_y, un_size_x, un_size_y)
@@ -73,8 +82,8 @@ class City(object):
         else:
             return 0
         
-    def buildBridge(self, un_bloc_index_1, un_bloc_index_2): # TODO
-        pass
+    def buildBridge(self, un_pos_x, un_pos_y, f_pos_z, f_angle_y, f_angle_z, f_length):
+        Bridge(un_pos_x, un_pos_y, f_pos_z, f_angle_y, f_angle_z, f_length)
     
     def buildBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
         """ The probability for a bloc to be modern style is decreasing with the distance from the city centre. """
