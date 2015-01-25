@@ -1,3 +1,4 @@
+from city.City import City
 
 class Banc3(object):
 

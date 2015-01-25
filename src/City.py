@@ -2,9 +2,9 @@
 from random import randint, random
 from Bloc import Bloc
 from math import cos, pi, sqrt, atan, hypot, floor, degrees
-from src import RetroBloc
-from src.ModernBloc import ModernBloc
-from src.bridges.Bridge import Bridge
+from RetroBloc import RetroBloc
+from ModernBloc import ModernBloc
+from Bridge import Bridge
 
 class City(object):
     UNIT_VALUE = 3 # 3 meters or blender units per unit
@@ -93,8 +93,8 @@ class City(object):
         fRatio = fDistance / max(self.m_unSizeX, self.m_unSizeY)
         
         if random() < fRatio: # Create retro style bloc
-            return RetroBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
+            return RetroBloc(un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
         else:
-            return ModernBloc(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
+            return ModernBloc(un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
         
         

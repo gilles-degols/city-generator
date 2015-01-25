@@ -1,10 +1,10 @@
-from src.Bloc import Bloc
+from Bloc import Bloc
 from random import random
-from src.elements.buildings.AncientTower import AncientTower
-from src.elements.buildings.AncientBuilding import AncientBuilding
-from src.elements.gardens.Garden import Garden
+from AncientTower import AncientTower
+from AncientBuilding import AncientBuilding
+from Garden import Garden
 from math import floor
-from src.elements.stations.Station import Station
+from Station import Station
 
 class RetroBloc(Bloc):
     ANCIENT_TOWER_MAX_HEIGHT = 10 # units (3m here)
@@ -13,7 +13,15 @@ class RetroBloc(Bloc):
     ANCIENT_BUILDING_MAX_HEIGHT = 6
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
-        Bloc.__init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
+        self.m_unPosX = un_pos_x
+        self.m_unPosY = un_pos_y
+        self.m_unPosZ = un_pos_z
+        self.m_unSizeX = un_size_x
+        self.m_unSizeY = un_size_y
+        self.m_listElements = []
+        self.m_listPathsMap = [[False for x in range(un_size_y)] for x in range(un_size_x)]
+        
+        self.buildBloc()
 
         
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):

@@ -1,4 +1,5 @@
 from random import random, uniform
+from city.City import City
 
 class Garden(object):
 

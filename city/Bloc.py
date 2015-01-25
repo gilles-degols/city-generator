@@ -1,10 +1,10 @@
 from random import random, randint
-from src.platforms.Platform1 import Platform1
-from src.platforms.Platform2 import Platform2
-from src.pathsElements.Banc1 import Banc1
-from src.pathsElements.TrashCan import TrashCan
-from src.pathsElements.Banc2 import Banc2
-from src.pathsElements.Banc3 import Banc3
+from Platform1 import Platform1
+from Platform2 import Platform2
+from Banc1 import Banc1
+from TrashCan import TrashCan
+from Banc2 import Banc2
+from Banc3 import Banc3
 
 class Bloc(object):
 

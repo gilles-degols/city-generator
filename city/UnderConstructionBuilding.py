@@ -1,3 +1,5 @@
+from city.City import City
+
 from random import random
 
 class UnderConstructionBuilding(object):

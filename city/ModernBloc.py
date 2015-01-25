@@ -15,7 +15,15 @@ class ModernBloc(Bloc):
     UNDER_CONSTRUCTION_BUILDING_MAX_HEIGHT = 12
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y):
-        Bloc.__init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y)
+        self.m_unPosX = un_pos_x
+        self.m_unPosY = un_pos_y
+        self.m_unPosZ = un_pos_z
+        self.m_unSizeX = un_size_x
+        self.m_unSizeY = un_size_y
+        self.m_listElements = []
+        self.m_listPathsMap = [[False for x in range(un_size_y)] for x in range(un_size_x)]
+        
+        self.buildBloc()
         
     def buildElement(self, un_pos_x, un_pos_y, un_size_x, un_size_y):
         fRand = random()
