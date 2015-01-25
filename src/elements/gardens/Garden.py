@@ -17,6 +17,14 @@ class Garden(object):
                     # Scale it at fScale
                     new_obj.scale = (fScale, fScale, fScale)
                     
+                    new_obj.select = True
                     scene.objects.link(new_obj)
                 
         # Tout joindre et remove doubles.
+        scene.objects.active = new_obj
+        bpy.ops.object.join()
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.remove_doubles()
+        bpy.ops.object.mode_set(mode='OBJECT')

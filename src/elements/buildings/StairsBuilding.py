@@ -32,8 +32,8 @@ class StairsBuilding(object):
         --unScaleX
         --unScaleY
         z_tot = 1 + City.UNIT_VALUE
+        new_obj.select = True
         scene.objects.link(new_obj)
-        print("Info: "+str(unScaleX)+" & "+str(unScaleY))
         
         while unScaleX > 0 and unScaleY > 0:
             
@@ -42,10 +42,18 @@ class StairsBuilding(object):
             new_obj.location = (0, 0, z_tot)
             new_obj.scale = (unScaleX, unScaleY, 1)
             z_tot += City.UNIT_VALUE
+            new_obj.select = True
             scene.objects.link(new_obj)
             
             # Scale Element (unScaleX, unScaleY, 1)
             unScaleX -= 1
             unScaleY -= 1
         
-        # TODO Join all objects and remove doubles
+        # Join all objects and remove doubles
+        scene.objects.active = new_obj
+        bpy.ops.object.join()
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.remove_doubles()
+        bpy.ops.object.mode_set(mode='OBJECT')
