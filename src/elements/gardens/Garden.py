@@ -9,14 +9,14 @@ class Garden(object):
                 if random() < 0.33:
                     # Put (duplicate) "banana palm tree (low poly leaves) joined" at (x, y, un_pos_z)
                     obj = bpy.data.objects['_PalmTree']
-					mesh = obj.data
-					new_obj = bpy.data.objects.new('PalmTree', mesh)
-					new_obj.location = (x * City_UNIT_VALUE, y * City_UNIT_VALUE, un_pos_z * City_UNIT_VALUE)
-					
-					fScale = uniform(0.2, 1)
+                    mesh = obj.data
+                    new_obj = bpy.data.objects.new('PalmTree', mesh)
+                    new_obj.location = (x * City.UNIT_VALUE, y * City.UNIT_VALUE, un_pos_z * City.UNIT_VALUE)
+                    
+                    fScale = uniform(0.2, 1)
                     # Scale it at fScale
-					new_obj.scale = (fScale, fScale, fScale)
-					
-					scene.objects.link(new_obj)
+                    new_obj.scale = (fScale, fScale, fScale)
+                    
+                    scene.objects.link(new_obj)
                 
         # Tout joindre et remove doubles.
