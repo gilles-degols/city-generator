@@ -3,10 +3,6 @@ class AncientBuilding(object):
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_size_x, un_size_y, un_height, empty, scene):
         # First the side walls:
-        # MULTIPLIER TOUTES LES COORDONNÉES PAR City.UNIT_VALUE
-        un_pos_x *= City.UNIT_VALUE
-        un_pos_y *= City.UNIT_VALUE
-        un_pos_z *= City.UNIT_VALUE
         wall_element_1 = bpy.data.objects['_RetroBuildingWall']
         for z in range(0, un_height - 1):
             for x in range(un_size_x):

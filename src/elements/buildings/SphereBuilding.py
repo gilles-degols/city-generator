@@ -3,22 +3,22 @@ class SphereBuilding(object):
 
     def __init__(self, un_pos_x, un_pos_y, un_pos_z, un_height):
         # Put cylinder at (un_pos_x, un_pos_y, un_pos_z)
-		obj = bpy.data.objects['_ModernTowerCylinder']
-		mesh = obj.data
-		new_obj = bpy.data.objects.new('ModernTowerCylinder', mesh)
-		new_obj.location = (un_pos_x * City_UNIT_VALUE, un_pos_y * City_UNIT_VALUE, un_pos_z * City_UNIT_VALUE)
+        obj = bpy.data.objects['_ModernTowerCylinder']
+        mesh = obj.data
+        new_obj = bpy.data.objects.new('ModernTowerCylinder', mesh)
+        new_obj.location = (un_pos_x * City.UNIT_VALUE, un_pos_y * City.UNIT_VALUE, un_pos_z * City.UNIT_VALUE)
         
-		# Scale it (1, 1, un_height - 4)
-		new_obj.scale = (1, 1, un_height - 4)
-		
-		scene.objects.link(new_obj)
+        # Scale it (1, 1, un_height - 4)
+        new_obj.scale = (1, 1, un_height - 4)
+        
+        scene.objects.link(new_obj)
         
         # Put sphere at (un_pos_x, un_pos_y, un_pos_z + un_height - 4)
-		obj = bpy.data.objects['_ModernTowerSphere']
-		mesh = obj.data
-		new_obj = bpy.data.objects.new('ModernTowerSphere', mesh)
-		new_obj.location = (un_pos_x * City_UNIT_VALUE, un_pos_y * City_UNIT_VALUE, (un_pos_z + un_height - 4) * City_UNIT_VALUE)
+        obj = bpy.data.objects['_ModernTowerSphere']
+        mesh = obj.data
+        new_obj = bpy.data.objects.new('ModernTowerSphere', mesh)
+        new_obj.location = (un_pos_x * City.UNIT_VALUE, un_pos_y * City.UNIT_VALUE, (un_pos_z + un_height - 4) * City.UNIT_VALUE)
         
-		scene.objects.link(new_obj)
-		
+        scene.objects.link(new_obj)
+        
         # Join and remove doubles
