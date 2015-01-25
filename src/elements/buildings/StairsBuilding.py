@@ -7,9 +7,9 @@ class StairsBuilding(object):
         unScaleY = un_size_y
         
         # Duplicate Element from Modern 1 building.
-		obj = bpy.data.objects['_UnderConstructionWindow']
+		obj = bpy.data.objects['_ModernStairsBuildingElement']
 		mesh = obj.data
-		new_obj = bpy.data.objects.new('UnderConstructionWindow', mesh)
+		new_obj = bpy.data.objects.new('ModernStairsBuildingElement', mesh)
         
         fRand = random()
         
