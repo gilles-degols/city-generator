@@ -1,4 +1,4 @@
-from city.City import City
+from City import City
 
 class Platform1(object):
 

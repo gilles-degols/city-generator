@@ -70,7 +70,7 @@ class City(object):
             fZ = self.computeZ(un_pos_x, un_pos_y, un_size_x, un_size_y)
             cBloc = self.buildBloc(un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
             self.m_listBlocs.append(cBloc)
-            print "bloc %s pos %s %s %s size %s %s" % (len(self.m_listBlocs), un_pos_x, un_pos_y, fZ, un_size_x, un_size_y)
+            
             # TODO Mettre le bloc en enfant de la ville
             return len(self.m_listBlocs)-1
         

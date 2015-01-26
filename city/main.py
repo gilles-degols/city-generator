@@ -63,7 +63,7 @@ class OBJECT_OT_GenerateCity(bpy.types.Operator):
         empty.name = 'City'
         
         #Création ville TODO
-        cCity = City(20, 15, 5, 10, 3, {"type":"cos*cos", "amplitude":1, "x period":25, "y period":25})
+        cCity = City(25, 20, 5, 13, 3, {"type":"cos*cos", "amplitude":1, "x period":25, "y period":25})
 
         """
         # Get the template objects (name starting with '_'
